@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
+import { rgba } from 'polished';
+import { Tooltip } from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const Wrapper = styled.div`
+  position: relative;
+  width: 222px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #0000ff;
+  font-weight: 600;
+  color: #565360;
+`;
+
+const GlobalStyle = createGlobalStyle`
+  body .tippy-tooltip {
+    border-radius: px;
+  }
+`;
+
+const CustomTooltip = styled.div`
+  color: ${rgba("#fff", 0.85)};
+`;
+
+const CustomButton = styled.button`
+  cursor: pointer;
+`;
+
+const InteractiveTooltip = () => {
+  const TooltipContent = (
+    <CustomTooltip>
+      Simple Tooltip with
+      <CustomButton>Button</CustomButton>
+    </CustomTooltip>
   );
-}
 
-export default App;
+  return (
+    <>
+      <GlobalStyle />
+      <Tooltip html={TooltipContent}>
+        <Wrapper>Hover Me</Wrapper>
+      </Tooltip>
+    </>
+  );
+};
+
+export default InteractiveTooltip;
