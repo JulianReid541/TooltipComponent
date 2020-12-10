@@ -1,49 +1,86 @@
-import React, { useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-import { rgba } from 'polished';
-import { Tooltip } from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
+import React, { useState } from "react";
+import styled, { createGlobalStyle } from "styled-components";
+import { rgba } from "polished";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 const Wrapper = styled.div`
   position: relative;
+  overflow: hidden;
   width: 222px;
-  height: 72px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 1rem 2rem 1rem 1rem;
   border-radius: 8px;
-  background: #0000ff;
-  font-weight: 600;
-  color: #565360;
+  background: #fff;
+  outline: none;
+  color: ${rgba("#565360", 0.85)};
 `;
 
 const GlobalStyle = createGlobalStyle`
   body .tippy-tooltip {
-    border-radius: px;
+    border-radius: 5px;
   }
 `;
 
-const CustomTooltip = styled.div`
-  color: ${rgba("#fff", 0.85)};
+const Gradient = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: linear-gradient(45deg, #ee0979, #ff6a00);
 `;
 
-const CustomButton = styled.button`
+const GradientTitle = styled.div`
+  margin-left: 1rem;
+  font-size: 1.175rem;
+  font-weight: 600;
+`;
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: white;
+  outline: none;
   cursor: pointer;
 `;
 
-const InteractiveTooltip = () => {
+const ButtonText = styled.span`
+  margin-right: 1rem;
+`;
+
+const InteractiveTooltip = ({}) => {
+  const [isCopied, setCopied] = useState(false);
+
+  const onClick = () => {
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3500);
+  };
+
   const TooltipContent = (
-    <CustomTooltip>
-      Simple Tooltip with
-      <CustomButton>Button</CustomButton>
-    </CustomTooltip>
+    <Button onClick={onClick}>
+      <ButtonText>Copy To Clipboard</ButtonText>
+    </Button>
   );
 
   return (
     <>
       <GlobalStyle />
-      <Tooltip html={TooltipContent}>
-        <Wrapper>Hover Me</Wrapper>
+      <Tooltip
+        hideOnClick={false}
+        offset={-111}
+        html={TooltipContent}
+        interactive
+      >
+        <Wrapper>
+          <Gradient />
+          <GradientTitle>
+            {isCopied ? "CSS Copied!" : "Ibiza Sunset"}
+          </GradientTitle>
+        </Wrapper>
       </Tooltip>
     </>
   );
